@@ -1,3 +1,27 @@
+*   Make ActiveRecord::Relation #one? and #many? work with .group() queries
+
+    If a query contains a group(), #one? and #many? are now determined by the
+    number of groups returned, which matches the number of records returned
+    and the result of length().
+
+    For example, if there is a single post, even with multiple comments:
+
+    ```ruby
+      Post.joins(:comments).group('posts.id').one? # true
+      Post.joins(:comments).group('posts.id').many? # false
+    ```
+
+    If there are multiple posts:
+
+    ```ruby
+      Post.joins(:comments).group('posts.id').one? # false
+      Post.joins(:comments).group('posts.id').many? # true
+    ```
+
+    See #41870 for more examples.
+
+    *Michael Nacos*
+
 *   Clear cached `has_one` association after setting `belongs_to` association to `nil`.
 
     After setting a `belongs_to` relation to `nil` and updating an unrelated attribute on the owner,
