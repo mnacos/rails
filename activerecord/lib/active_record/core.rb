@@ -77,8 +77,6 @@ module ActiveRecord
 
       class_attribute :default_shard, instance_writer: false
 
-      class_attribute :destroy_all_in_batches, instance_accessor: false, default: false
-
       def self.application_record_class? # :nodoc:
         if ActiveRecord.application_record_class
           self == ActiveRecord.application_record_class
@@ -601,6 +599,8 @@ module ActiveRecord
     # Delegates to id in order to allow two records of the same type and id to work with something like:
     #   [ Person.find(1), Person.find(2), Person.find(3) ] & [ Person.find(1), Person.find(4) ] # => [ Person.find(1) ]
     def hash
+      id = self.id
+
       if id
         self.class.hash ^ id.hash
       else

@@ -1,3 +1,11 @@
+*   Fix `config_for` error when there's only a shared root array.
+
+    *Loïc Delmaire*
+
+*   Raise an error in generators if an index type is invalid.
+
+    *Petrik de Heus*
+
 *   `package.json` now uses a strict version constraint for Rails JavaScript packages on new Rails apps.
 
     *Zachary Scott*, *Alex Ghiculescu*

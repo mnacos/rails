@@ -5,7 +5,7 @@ require "active_support/dependencies"
 
 module ActionDispatch
   class MiddlewareStack
-    class FakeRuntime
+    class FakeRuntime # :nodoc:
       def initialize(app)
         @app = app
       end
@@ -130,7 +130,7 @@ module ActionDispatch
     ruby2_keywords(:swap)
 
     def delete(target)
-      middlewares.delete_if { |m| m.name == target.name }
+      middlewares.reject! { |m| m.name == target.name } || (raise "No such middleware to delete: #{target.inspect}")
     end
 
     def move(target, source)
